@@ -67,7 +67,7 @@ LEARNCARD-GAME
 1. **Clone das Repository**:
 
     ```bash
-    git clone GITHUB LINK
+    git clone https://github.com/Felix-From/LearnCard-Game
     ```
 
 2. **Abhängigkeiten installieren**:
