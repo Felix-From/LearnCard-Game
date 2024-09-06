@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fragen-Karte</title>
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+    <!-- FontAwesome CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="styles/style.css" rel="stylesheet">
+    <script src="scripts/script.js"></script>
+</head>
+<body>
+
+<div class="card-container" >
+    <div class="topline">
+        <div id="count">
+            <div id="c1">Frage <span id="currentQuestion">0</span>/<span id="maxQuestion">200</span></div>
+            <div id="c2">Schwierigkeit: <span id="diffcu"></span></div> 
+        </div>
+        <div id="skip">
+            <label for="skip_val">Zu Frage springen:</label>
+            <div>
+                <input type="text" id="skip_val" name="skip" required value="1">
+                <a
+                    class="btn btn-primary"
+                    role="button"
+                    onclick="nextDirektQuestion()"
+                ><i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="card-flip" id="cardFlip">
+        <!-- Vorderseite der Karte -->
+        <div class="card-front">
+            <h4 id="cardTitle">Prüfungsvorbereitung</h4>
+            <div class="cardContent">
+                <div id="cardQuestion" class= " centerText">Das ist ein Frage-Antwort Spiel.<br>Was ist die Antwort?</div>
+                <div class="cardImg qImg">
+                    <img class="img" id="cardImg" src="./img/Hase1.png">
+                    <div style="font-size: smaller;">Aufs Bild klicken zum Vergrößern/Verkleinern</div>
+                </div>
+            </div>
+            <div class="cardButton">
+                <button class="btn btn-primary" style="width: 100%;" onclick="flipCard()">
+                    <i class="fas fa-sync-alt"></i> Lösung anzeigen
+                </button>
+            </div>
+        </div>
+        <!-- Rückseite der Karte -->
+        <div class="card-back">
+            <h4 id="cardTitleBack">Lösung</h4>
+            <div class="cardContent">
+                <div id="cardAnswer"class= " centerText">Viel Spaß!</div>
+                <div class="cardImg aImg">
+                    <img class="img" id="cardAImg" src="./img/Hase1.png"></img>
+                    <span style="font-size: smaller;">Aufs Bild klicken zum Vergrößern/Verkleinern</span>
+                </div>
+            </div>
+            <div class="cardButton">
+                <button class="btn btn-secondary" onclick="flipCard()">
+                    <i class="fas fa-arrow-left"></i> Zurück zur Frage
+                </button>
+                <button class="btn btn-success" onclick="nextQuestion()">
+                    <i class="fas fa-arrow-right"></i> Nächste Frage
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="fullpage" onclick="this.style.display='none';"></div>
+<!-- Bootstrap JS, Popper.js, and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script
+            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"
+        ></script>
+
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"
+        ></script>
+<!-- Custom JS -->
+
+</body>
+</html>

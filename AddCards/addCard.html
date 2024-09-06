@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karten hinzufügen</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Karten hinzufügen</h1>
+
+<form id="card" action="insert_card.php" method="post">
+    <label for="card_set">Kartensatz:</label>
+    <input type="text" id="card_set" name="card_set" required value="1">
+
+    <label for="question_id">Fragen-ID:</label>
+    <input type="number" id="question_id" name="question_id" required>
+
+    <label for="difficulty">Schwierigkeit:</label>
+    <input type="number" id="difficulty" name="difficulty" required value="1">
+
+    <label for="title">Titel:</label>
+    <input type="text" id="title" name="title" required value="Informieren und Beraten von Kunden und Kundinnen">
+
+    <label for="question">Frage:</label>
+    <textarea id="question" name="question" rows="4" required></textarea>
+
+    <label for="qimage">Fragen-Bild (optional):</label>
+    <input type="file" id="qimage" name="qimage" accept="image/png, image/jpeg, image/gif">
+
+    <label for="answer">Antwort:</label>
+    <textarea id="answer" name="answer" rows="4" required></textarea>
+
+    <label for="aimage">Antwort-Bild (optional):</label>
+    <input type="file" id="aimage" name="aimage" accept="image/png, image/jpeg, image/gif">
+
+    <button id="submitBtn" type="submit">Eintrag hinzufügen</button>
+</form>
+<div id = result>
+
+</div>
+<script>
+    var form = document.getElementById("card");
+
+    async function handleForm(event) {
+        event.preventDefault();
+
+        // Create a new FormData object to handle form data
+        var formData = new FormData(form);
+
+        try {
+            // Send a POST request using fetch API
+            let response = await fetch('insert_card.php', {
+                method: 'POST',
+                body: formData
+            });
+
+            // Check if the response is ok
+            if (response.ok) {
+                let result = await response.json(); // Assuming the response is in JSON format
+                document.getElementById("result").innerHTML = '<pre>' + JSON.stringify(result, null, 2) + '</pre>';
+            } else {
+                alert('Fehler beim Hinzufügen des Eintrags. Bitte erneut versuchen.');
+            }
+        } catch (error) {
+            alert('Fehler beim Senden der Anfrage.');
+            console.error('Error:', error);
+        }
+    }
+
+    form.addEventListener('submit', handleForm);
+</script>
+</body>
+</html>

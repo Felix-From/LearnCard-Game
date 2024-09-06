@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abfrage der Karten</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        form {
+            max-width: 600px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Abfrage der Karten</h1>
+
+<form id="queryForm">
+    <label for="card_set">Kartensatz:</label>
+    <input type="text" id="card_set" name="card_set" required>
+
+    <label for="question_id">Fragen-ID:</label>
+    <input type="number" id="question_id" name="question_id" required>
+
+    <button type="submit">Abfragen</button>
+</form>
+
+<div id="result"></div>
+
+<script>
+    document.getElementById('queryForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        var card_set = document.getElementById('card_set').value;
+        var question_id = document.getElementById('question_id').value;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', 'query_card.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onload = function() {
+            if (xhr.status >= 200 && xhr.status < 400) {
+                // Verarbeite die JSON-Antwort
+                var response = JSON.parse(xhr.responseText);
+                var resultDiv = document.getElementById('result');
+                if (Array.isArray(response)) {
+                    resultDiv.innerHTML = '<pre>' + JSON.stringify(response, null, 2) + '</pre>';
+                } else {
+                    resultDiv.innerHTML = response.message || response.error;
+                }
+            } else {
+                console.error('Fehler bei der Anfrage.');
+            }
+        };
+        xhr.send('card_set=' + encodeURIComponent(card_set) + '&question_id=' + encodeURIComponent(question_id));
+    });
+</script>
+
+</body>
+</html>
